@@ -76,6 +76,11 @@ class DBStorage:
                 return value
         return None
 
+    def get_user_by_uname(self, uname):
+        """Returns user object based on unique uname"""
+        u = self.__session.query(User).filter(User.uname == uname).first()
+        return (u)
+
     def count(self, cls=None):
         """count the number of objects in storage"""
         all_class = classes.values()
