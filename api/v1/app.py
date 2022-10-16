@@ -9,8 +9,9 @@ from api.v1.views import (
 )
 
 app = Flask(__name__)
-CORS(app, origins='0.0.0.0')
+# CORS(app, origins='0.0.0.0')
 app.register_blueprint(user_views)
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
