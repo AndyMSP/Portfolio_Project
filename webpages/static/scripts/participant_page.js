@@ -65,7 +65,7 @@ async function getLocalStream() {
     localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     localAudio = localStream.getAudioTracks()[0];
     localVideo = localStream.getVideoTracks()[0];
-    document.querySelector("#participant").srcObject = localStream;
+    // document.querySelector("#participant").srcObject = localStream;
 }
 
 

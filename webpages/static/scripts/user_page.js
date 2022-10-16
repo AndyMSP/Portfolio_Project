@@ -46,8 +46,6 @@ let localStream;
 let localAudio;
 let localVideo;
 let remoteStream = new MediaStream;
-let remoteAudio;
-let remoteVideo;
 
 
 // function definitions
