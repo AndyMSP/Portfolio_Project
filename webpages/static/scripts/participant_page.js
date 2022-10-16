@@ -47,30 +47,9 @@ let localStream;
 let localAudio;
 let localVideo;
 let remoteStream = new MediaStream;
-let remoteAudio;
-let remoteVideo;
 
 
 // function definitions
-
-
-// create peer connection and ice event listeners
-async function create_peer_conn() {
-    peerConnection = new RTCPeerConnection(servers);
-    peerConnection.addTrack(localVideo, localStream);
-    peerConnection.addTrack(localAudio, localStream);
-    peerConnection.onicecandidate = async (event) => {
-        if (event.candidate) {
-            client.sendMessageToPeer({ text: JSON.stringify({ 'type': 'new-ice-candidate', 'text': event.candidate }) }, u_agora_uid)
-        }
-    }
-    peerConnection.ontrack = async (event) => {
-        event.streams[0].getTracks().forEach((track) => {
-            remoteStream.addTrack(track);
-        });
-    }
-}
-
 
 
 // initialize agora client
@@ -88,6 +67,28 @@ async function getLocalStream() {
     localVideo = localStream.getVideoTracks()[0];
     document.querySelector("#participant").srcObject = localStream;
 }
+
+
+// create peer connection, ice event listeners and track event listeners
+async function create_peer_conn() {
+    peerConnection = new RTCPeerConnection(servers);
+    peerConnection.addTrack(localVideo, localStream);
+    peerConnection.addTrack(localAudio, localStream);
+    peerConnection.onicecandidate = async (event) => {
+        if (event.candidate) {
+            let msg_obj = { 'type': 'new-ice-candidate', 'text': event.candidate };
+            let msg = JSON.stringify(msg_obj);
+            client.sendMessageToPeer({ text: msg }, u_agora_uid)
+        }
+    }
+    peerConnection.ontrack = async (event) => {
+        event.streams[0].getTracks().forEach((track) => {
+            remoteStream.addTrack(track);
+        });
+    }
+}
+
+
 
 
 // check if user is available and handle accordingly
