@@ -183,6 +183,10 @@ async function handleMessageFromPeer(message, uid) {
 const call_button = document.querySelector('#call_button');
 call_button.addEventListener('click', call);
 
+async function attach_remote_stream() {
+    document.querySelector('#user').srcObject = remoteStream;
+}
+
 
 // Listen for local ICE candidates on the local RTCPeerConnection
 // peerConnection.addEventListener('icecandidate', event => {
@@ -198,6 +202,7 @@ async function run() {
     await agora_init();
     await getLocalStream();
     await create_peer_conn();
+    await attach_remote_stream();
 }
 
 run()
