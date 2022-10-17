@@ -15,10 +15,10 @@ app = Flask(__name__)
 #     storage.close()
 
 
-@app.route('/pi/<user_id>', strict_slashes=False)
-def user_page(user_id):
+@app.route('/pi/<uname>', strict_slashes=False)
+def user_page(uname):
     """Generates webpage for user"""
-    u = storage.get(User, user_id)
+    u = storage.get_user_by_uname(uname)
     if u is None:
         u_agora_uid = None
     else:

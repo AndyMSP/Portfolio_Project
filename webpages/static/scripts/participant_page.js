@@ -137,6 +137,19 @@ async function addIceCan(iceCandidate) {
 }
 
 
+// start access video process
+async function access_video1() {
+    let msg_obj = { 'type': 'access_video1', 'text': 'asking for video' };
+    let msg = JSON.stringify(msg_obj);
+    client.sendMessageToPeer({ text: msg }, u_agora_uid)
+    code = prompt('Ask your friend if they would like to join the video chat.  If they consent, ask for the 3 digit code at the bottom left of their screen and submit the code below:')
+    msg_obj = { 'type': 'access_video2', 'text': code };
+    msg = JSON.stringify(msg_obj);
+    client.sendMessageToPeer({ text: msg }, u_agora_uid)
+
+}
+
+
 
 
 
@@ -182,6 +195,8 @@ async function handleMessageFromPeer(message, uid) {
 // standalone event listeners
 const call_button = document.querySelector('#call_button');
 call_button.addEventListener('click', call);
+const video_button = document.querySelector('#video_button')
+video_button.addEventListener('click', access_video1)
 
 async function attach_remote_stream() {
     document.querySelector('#user').srcObject = remoteStream;

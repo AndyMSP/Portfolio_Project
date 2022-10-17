@@ -38,6 +38,7 @@ let p_agora_uid;
 
 // additional variables
 let peerConnection = new RTCPeerConnection(servers);
+const secret_code = Math.floor(Math.random()*899 + 100);
 
 
 // dynamic global variables
@@ -82,7 +83,7 @@ async function getLocalStream() {
     localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
     localAudio = localStream.getAudioTracks()[0];
     localVideo = localStream.getVideoTracks()[0];
-    // localVideo.enabled = false;
+    localVideo.enabled = false;
 }
 
 
@@ -94,7 +95,13 @@ async function call_response() {
 }
 
 
-
+// check video access code and enable if correct
+async function access_video2(code) {
+    if (code == secret_code) {
+        code_box.style.visibility = 'hidden';
+        localVideo.enabled = true;
+    }
+}
 
 
 
@@ -151,6 +158,14 @@ async function handleMessageFromPeer(message, uid) {
         iceCandidate = text;
         addIceCan(iceCandidate);
     }
+
+    if (type == 'access_video1') {
+        code_box.style.visibility = 'visible';
+    }
+
+    if (type == 'access_video2') {
+        access_video2(text);
+    }
 }
 
 
@@ -165,6 +180,12 @@ async function handleMessageFromPeer(message, uid) {
 async function attach_remote_stream() {
     document.querySelector('#participant').srcObject = remoteStream;
 }
+
+
+// element variables
+const code_box = document.querySelector('#code_box');
+code_box.textContent = secret_code;
+
 
 
 

@@ -30,7 +30,7 @@ body {
     background-color: antiquewhite;
 }
 
-#code {
+#code_box {
     position: absolute;
     bottom: 5%;
     left: 5%;
@@ -38,4 +38,5 @@ body {
     font-size: 20vh;
     background-color: white;
     border-radius: 20px;
+    visibility: hidden;
 }
