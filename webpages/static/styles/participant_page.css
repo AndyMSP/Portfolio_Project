@@ -5,25 +5,37 @@ html {
 body {
     height: 98vh;
     margin: 1vh;
-    background-color: brown;
+    background-color: rgb(63, 63, 63);
 }
 
 #videos {
+    position: relative;
     height: 80%;
-    width: 100%;
+    width: fit-content;
+    margin: auto;
     background-color: aqua;
 }
 
+.video-player {
+    object-fit: contain;
+    object-position: bottom;
+    background-color: blueviolet;
+}
+
 #participant {
-    height:100%;
-    width: 100%;
-    max-height: 100%;
-    max-width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 20%;
+    z-index: 20;
+    background-color: blue;
 }
 
 #user {
     height:100%;
-    width: 100%;
+    margin: auto;
     max-height: 100%;
     max-width: 100%;
+    z-index: 10;
+    background-color: antiquewhite;
 }
