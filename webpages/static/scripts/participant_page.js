@@ -94,7 +94,7 @@ async function create_peer_conn() {
 // check if user is available and handle accordingly
 async function call() {
     call_button.disabled = true;
-    url = `http://localhost:5001/api/v1/users/${id}/status`;
+    url = `https://localhost:5001/api/v1/users/${id}/status`;
     const resp = await fetch(url);
     const data = await resp.json();
     if (data.status == 'free') {
