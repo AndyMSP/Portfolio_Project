@@ -191,7 +191,6 @@ code_box.textContent = secret_code;
 
 // function calls
 async function run() {
-    document.querySelector('body').requestFullscreen()
     await agora_init();
     await getLocalStream();
     await create_peer_conn();
