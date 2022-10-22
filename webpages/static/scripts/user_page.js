@@ -80,8 +80,8 @@ async function agora_init() {
 
 // get local stream and assign its tracks to variables, disable video
 async function getLocalStream() {
-    localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
-    localAudio = localStream.getAudioTracks()[0];
+    localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: false});
+    // localAudio = localStream.getAudioTracks()[0];
     localVideo = localStream.getVideoTracks()[0];
     localVideo.enabled = false;
 }
