@@ -56,7 +56,7 @@ let remoteStream = new MediaStream;
 async function create_peer_conn() {
     peerConnection = new RTCPeerConnection(servers);
     peerConnection.addTrack(localVideo, localStream);
-    peerConnection.addTrack(localAudio, localStream);
+    // peerConnection.addTrack(localAudio, localStream);
     peerConnection.onicecandidate = async (event) => {
         if (event.candidate) {
             client.sendMessageToPeer({ text: JSON.stringify({ 'type': 'new-ice-candidate', 'text': event.candidate }) }, p_agora_uid)
