@@ -38,7 +38,7 @@ let p_agora_uid;
 
 // additional variables
 let peerConnection = new RTCPeerConnection(servers);
-const secret_code = Math.floor(Math.random()*899 + 100);
+const secret_code = Math.floor(Math.random() * 899 + 100);
 
 
 // dynamic global variables
@@ -67,134 +67,139 @@ async function create_peer_conn() {
             remoteStream.addTrack(track)
         });
     }
-}
-
-
-// initialize agora client
-async function agora_init() {
-    client = await AgoraRTM.createInstance(APP_ID);
-    await client.login({ uid: u_agora_uid });
-    client.on('MessageFromPeer', handleMessageFromPeer)
-}
-
-
-// get local stream and assign its tracks to variables, disable video
-async function getLocalStream() {
-    localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
-    localAudio = localStream.getAudioTracks()[0];
-    localVideo = localStream.getVideoTracks()[0];
-    localVideo.enabled = false;
-}
-
-
-// respond to inital agora call
-async function call_response() {
-    let msg_obj = { 'type': 'agora_connect', 'text': 'connection succesful!' };
-    let msg = JSON.stringify(msg_obj);
-    client.sendMessageToPeer({ text: msg }, p_agora_uid);
-}
-
-
-// check video access code and enable if correct
-async function access_video2(code) {
-    if (code == secret_code) {
-        code_box.style.visibility = 'hidden';
-        localVideo.enabled = true;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// respond to WebRTC offer with answer
-async function WebRTC_response (offer) {
-    peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-    answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-    let msg_obj = {'type': 'answer', 'text': answer};
-    let msg = JSON.stringify(msg_obj);
-    client.sendMessageToPeer({text: msg}, p_agora_uid);
-}
-
-
-// add ICE candidate
-async function addIceCan (iceCandidate) {
-    await peerConnection.addIceCandidate(iceCandidate)
-}
-
-
-
-
-
-// handle messages from agora appropriately
-async function handleMessageFromPeer(message, uid) {
-    message = JSON.parse(message.text)
-    let type = message.type;
-    let text = message.text;
-    p_agora_uid = uid;
-    console.log(`${uid}\ntype: ${type}\ntext: ${text}`)
-
-    if (type == 'agora_connect') {
-        call_response();
+    peerConnection.onconnectionstatechange = function() {
+            if (peerConnection.iceConnectionState == 'disconnected') {
+                console.log('Disconnected');
+            }
+        }
     }
 
-    if (type == 'offer') {
-        offer = text;
-        WebRTC_response(offer)
+
+    // initialize agora client
+    async function agora_init() {
+        client = await AgoraRTM.createInstance(APP_ID);
+        await client.login({ uid: u_agora_uid });
+        client.on('MessageFromPeer', handleMessageFromPeer)
     }
 
-    if (type == 'new-ice-candidate') {
-        iceCandidate = text;
-        addIceCan(iceCandidate);
+
+    // get local stream and assign its tracks to variables, disable video
+    async function getLocalStream() {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localAudio = localStream.getAudioTracks()[0];
+        localVideo = localStream.getVideoTracks()[0];
+        localVideo.enabled = false;
     }
 
-    if (type == 'access_video1') {
-        code_box.style.visibility = 'visible';
+
+    // respond to inital agora call
+    async function call_response() {
+        let msg_obj = { 'type': 'agora_connect', 'text': 'connection succesful!' };
+        let msg = JSON.stringify(msg_obj);
+        client.sendMessageToPeer({ text: msg }, p_agora_uid);
     }
 
-    if (type == 'access_video2') {
-        access_video2(text);
+
+    // check video access code and enable if correct
+    async function access_video2(code) {
+        if (code == secret_code) {
+            code_box.style.visibility = 'hidden';
+            localVideo.enabled = true;
+        }
     }
-}
-
-
-// async function sendNewICE(event) {
-//     if (event.candidate) {
-//         let msg_obj = { 'type': 'new-ice-candidate', 'text': event.candidate };
-//         let msg = JSON.stringify(msg_obj);
-//         client.sendMessageToPeer({ text: msg }, p_agora_uid)
-//     }
-// }
-
-async function attach_remote_stream() {
-    document.querySelector('#participant').srcObject = remoteStream;
-}
-
-
-// element variables
-const code_box = document.querySelector('#code_box');
-code_box.textContent = secret_code;
 
 
 
 
-// function calls
-async function run() {
-    await agora_init();
-    await getLocalStream();
-    await create_peer_conn();
-    await attach_remote_stream();
-}
 
-run()
+
+
+
+
+
+
+
+
+
+
+    // respond to WebRTC offer with answer
+    async function WebRTC_response(offer) {
+        peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+        let msg_obj = { 'type': 'answer', 'text': answer };
+        let msg = JSON.stringify(msg_obj);
+        client.sendMessageToPeer({ text: msg }, p_agora_uid);
+    }
+
+
+    // add ICE candidate
+    async function addIceCan(iceCandidate) {
+        await peerConnection.addIceCandidate(iceCandidate)
+    }
+
+
+
+
+
+    // handle messages from agora appropriately
+    async function handleMessageFromPeer(message, uid) {
+        message = JSON.parse(message.text)
+        let type = message.type;
+        let text = message.text;
+        p_agora_uid = uid;
+        console.log(`${uid}\ntype: ${type}\ntext: ${text}`)
+
+        if (type == 'agora_connect') {
+            call_response();
+        }
+
+        if (type == 'offer') {
+            offer = text;
+            WebRTC_response(offer)
+        }
+
+        if (type == 'new-ice-candidate') {
+            iceCandidate = text;
+            addIceCan(iceCandidate);
+        }
+
+        if (type == 'access_video1') {
+            code_box.style.visibility = 'visible';
+        }
+
+        if (type == 'access_video2') {
+            access_video2(text);
+        }
+    }
+
+
+    // async function sendNewICE(event) {
+    //     if (event.candidate) {
+    //         let msg_obj = { 'type': 'new-ice-candidate', 'text': event.candidate };
+    //         let msg = JSON.stringify(msg_obj);
+    //         client.sendMessageToPeer({ text: msg }, p_agora_uid)
+    //     }
+    // }
+
+    async function attach_remote_stream() {
+        document.querySelector('#participant').srcObject = remoteStream;
+    }
+
+
+    // element variables
+    const code_box = document.querySelector('#code_box');
+    code_box.textContent = secret_code;
+
+
+
+
+    // function calls
+    async function run() {
+        await agora_init();
+        await getLocalStream();
+        await create_peer_conn();
+        await attach_remote_stream();
+    }
+
+    run()
