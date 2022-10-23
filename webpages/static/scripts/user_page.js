@@ -39,6 +39,7 @@ let p_agora_uid;
 // additional variables
 let peerConnection = new RTCPeerConnection(servers);
 const secret_code = Math.floor(Math.random() * 899 + 100);
+pituunel_url = document.querySelector('[name=pitunnel_url]').content
 
 
 // dynamic global variables

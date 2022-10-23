@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module to define User Class"""
 
+from ast import Str
 import models
 from models.base_model import BaseModel, Base
 import sqlalchemy
@@ -13,6 +14,7 @@ class User(BaseModel, Base):
     uname = Column(String(128), nullable=False, unique=True)
     name = Column(String(128), nullable=False)
     call_url = Column(String(128), nullable=False)
+    pitunnel_url = Column(String(128), nullable=False, unique=True)
     status = Column(String(128), nullable=False)
 
     def __init__(self, *args, **kwargs):
