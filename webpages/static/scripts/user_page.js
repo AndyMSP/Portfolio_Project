@@ -33,6 +33,7 @@ let answer;
 // agora variables
 const APP_ID = '421337ed80814526930e3824a0152658';
 const u_agora_uid = document.querySelector('[name=u_agora_uid]').content
+id = u_agora_uid;
 let p_agora_uid;
 
 
