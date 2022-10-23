@@ -6,7 +6,7 @@ from models import storage
 
 
 
-@action_views.route('/users/<user_id>/call>', methods=['GET'], strict_slashes=False)
+@action_views.route('/users/<user_id>/call', methods=['GET'], strict_slashes=False)
 def call_user(user_id):
     u = storage.get(User, user_id)
     if u is None:
