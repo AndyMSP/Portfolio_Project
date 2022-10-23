@@ -16,3 +16,15 @@ def call_user(user_id):
         msg = requests.get(url)
         response = jsonify({'msg': msg}, 200)
     return (response)
+
+
+@action_views.route('/users/<user_id>/end_call', methods=['GET'], strict_slashes=False)
+def call_user(user_id):
+    u = storage.get(User, user_id)
+    if u is None:
+        abort(404)
+    else:
+        url = u.pitunnel_url + 'end_call'
+        msg = requests.get(url)
+        response = jsonify({'msg': msg}, 200)
+    return (response)

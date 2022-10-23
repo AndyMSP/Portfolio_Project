@@ -154,6 +154,15 @@ async function access_video1() {
 }
 
 
+async function end_call() {
+    let msg_obj = { 'type': 'end_call', 'text': 'end call' };
+    let msg = JSON.stringify(msg_obj);
+    client.sendMessageToPeer({ text: msg }, u_agora_uid)
+    localAudio.stop()
+    localVideo.stop()
+}
+
+
 
 
 
@@ -199,8 +208,10 @@ async function handleMessageFromPeer(message, uid) {
 // standalone event listeners
 const call_button = document.querySelector('#call_button');
 call_button.addEventListener('click', call);
-const video_button = document.querySelector('#video_button')
-video_button.addEventListener('click', access_video1)
+const video_button = document.querySelector('#video_button');
+video_button.addEventListener('click', access_video1);
+end_call_button = document.querySelector('#end_call_button');
+end_call_button.addEventListener('click', end_call);
 
 async function attach_remote_stream() {
     document.querySelector('#user').srcObject = remoteStream;

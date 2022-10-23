@@ -70,7 +70,7 @@ async function create_peer_conn() {
     }
     peerConnection.onconnectionstatechange = function() {
             if (peerConnection.iceConnectionState == 'disconnected') {
-                console.log('Disconnected');
+                shutdown();
             }
         }
     }
@@ -111,7 +111,11 @@ async function create_peer_conn() {
 
 
 
-
+    // end call
+    async function shutdown() {
+        await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/status_update/${free}`)
+        await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/end_call`)
+    }
 
 
 
@@ -172,6 +176,10 @@ async function create_peer_conn() {
         if (type == 'access_video2') {
             access_video2(text);
         }
+
+        if (type == 'end_call') {
+            shutdown()
+        }
     }
 
 
@@ -197,6 +205,7 @@ async function create_peer_conn() {
 
     // function calls
     async function run() {
+        await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/status_update/${busy}`)
         await agora_init();
         await getLocalStream();
         await create_peer_conn();
