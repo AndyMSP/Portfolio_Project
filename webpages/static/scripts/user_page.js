@@ -114,6 +114,8 @@ async function create_peer_conn() {
 
     // end call
     async function shutdown() {
+        localAudio.stop()
+        localVideo.stop()
         await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/status_update/free`)
         await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/end_call`)
     }
