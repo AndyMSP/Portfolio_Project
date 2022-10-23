@@ -101,7 +101,7 @@ async function call() {
     const data = await resp.json();
     if (data.status == 'free') {
         console.log(`status = ${data.status}`);
-        url = pituunel_url + 'call'
+        url = `https://web-01.tacobell.tech/api/v1/users/${id}/call`;
         await fetch(url)
         agora_contact();
     } else {
