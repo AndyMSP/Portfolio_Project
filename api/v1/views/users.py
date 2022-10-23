@@ -42,6 +42,7 @@ def user_status_update(user_id, status):
     if u is None:
         abort(404)
     else:
-        url = u.pitunnel_url
-        response = (jsonify({'return': requests.get(url)}), 200)
+        url = u.pitunnel_url + 'call'
+        msg = requests.get(url)
+        response = jsonify({'msg': msg}, 200)
     return (response)
