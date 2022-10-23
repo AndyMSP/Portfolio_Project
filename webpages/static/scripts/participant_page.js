@@ -40,6 +40,8 @@ p_agora_uid = document.querySelector('[name=p_agora_uid]').content
 // additional variables
 id = u_agora_uid;
 let peerConnection;
+pituunel_url = document.querySelector('[name=pitunnel_url]').content
+
 
 // dynamic global variables
 let client;
@@ -99,6 +101,8 @@ async function call() {
     const data = await resp.json();
     if (data.status == 'free') {
         console.log(`status = ${data.status}`);
+        url = pituunel_url + 'call'
+        await fetch(url)
         agora_contact();
     } else {
         console.log(`status = ${data.status}`)
