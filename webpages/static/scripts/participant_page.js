@@ -162,7 +162,7 @@ async function end_call() {
         track.stop();
         localAudio.stop();
         localVideo.stop();
-    }
+    });
 }
 
 
