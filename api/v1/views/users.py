@@ -34,15 +34,3 @@ def user_status_update(user_id, status):
         u.save()
         response = (jsonify({'status': u.status}), 200)
     return (response)
-
-
-@user_views.route('/users/<user_id>/call>', methods=['GET'], strict_slashes=False)
-def user_status_update(user_id, status):
-    u = storage.get(User, user_id)
-    if u is None:
-        abort(404)
-    else:
-        url = u.pitunnel_url + 'incoming_call'
-        msg = requests.get(url)
-        response = jsonify({'msg': msg}, 200)
-    return (response)
