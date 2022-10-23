@@ -5,12 +5,14 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
 from api.v1.views import (
-    user_views
+    user_views,
+    action_views
 )
 
 app = Flask(__name__)
 # CORS(app, origins='0.0.0.0')
 app.register_blueprint(user_views)
+app.register_blueprint(action_views)
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
