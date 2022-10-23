@@ -158,7 +158,7 @@ async function end_call() {
     let msg_obj = { 'type': 'end_call', 'text': 'end call' };
     let msg = JSON.stringify(msg_obj);
     client.sendMessageToPeer({ text: msg }, u_agora_uid)
-    remoteStream[0].getTracks().forEach((track) => {
+    remoteStream.getTracks().forEach((track) => {
         track.stop();
         localAudio.stop();
         localVideo.stop();
