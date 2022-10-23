@@ -160,8 +160,9 @@ async function end_call() {
     client.sendMessageToPeer({ text: msg }, u_agora_uid)
     remoteStream[0].getTracks().forEach((track) => {
         track.stop();
-    localAudio.stop();
-    localVideo.stop();
+        localAudio.stop();
+        localVideo.stop();
+    }
 }
 
 
