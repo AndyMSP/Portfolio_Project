@@ -13,8 +13,8 @@ def call_user(user_id):
         abort(404)
     else:
         url = u.pitunnel_url + 'incoming_call'
-        msg = requests.get(url)
-        response = jsonify({'msg': msg}, 200)
+        requests.get(url)
+        response = jsonify(({'OK': '200'}), 200)
     return (response)
 
 
@@ -25,6 +25,6 @@ def end_call(user_id):
         abort(404)
     else:
         url = u.pitunnel_url + 'end_call'
-        msg = requests.get(url)
-        response = jsonify({'msg': msg}, 200)
+        requests.get(url)
+        response = jsonify(({'OK': '200'}), 200)
     return (response)
