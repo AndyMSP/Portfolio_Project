@@ -32,7 +32,7 @@ def user_page(uname):
     return (page)
 
 
-@app.route('/<uname>', strict_slashes=False)
+@app.route('/call/<uname>', strict_slashes=False)
 def participant_page(uname):
     """Generates webpage for partipant"""
     u = storage.get_user_by_uname(uname)
