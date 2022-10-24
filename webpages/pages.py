@@ -15,7 +15,7 @@ def close_db(error):
     storage.close()
 
 
-@app.route('/pi/<uname>', strict_slashes=False)
+@app.route('/call/pi/<uname>', strict_slashes=False)
 def user_page(uname):
     """Generates webpage for user"""
     u = storage.get_user_by_uname(uname)
