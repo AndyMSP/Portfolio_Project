@@ -96,6 +96,7 @@ async function create_peer_conn() {
 // check if user is available and handle accordingly
 async function call() {
     call_button.disabled = true;
+    end_call_button.disabled = false;
     url = `https://web-01.tacobell.tech/api/v1/users/${id}/status`;
     const resp = await fetch(url);
     const data = await resp.json();
@@ -143,6 +144,7 @@ async function addIceCan(iceCandidate) {
 
 // start access video process
 async function access_video1() {
+    video_button.disabled = true;
     let msg_obj = { 'type': 'access_video1', 'text': 'asking for video' };
     let msg = JSON.stringify(msg_obj);
     client.sendMessageToPeer({ text: msg }, u_agora_uid)
@@ -155,6 +157,7 @@ async function access_video1() {
 
 
 async function end_call() {
+    end_call_button.disabled = true;
     let msg_obj = { 'type': 'end_call', 'text': 'end call' };
     let msg = JSON.stringify(msg_obj);
     client.sendMessageToPeer({ text: msg }, u_agora_uid)
@@ -189,6 +192,7 @@ async function handleMessageFromPeer(message, uid) {
     if (type == 'new-ice-candidate') {
         iceCandidate = text;
         addIceCan(iceCandidate);
+        video_button.disabled = false;
     }
 }
 
@@ -232,6 +236,8 @@ async function attach_remote_stream() {
 
 // function calls
 async function run() {
+    video_button.disabled = true;
+    end_call_button.disabled = true;
     await agora_init();
     await getLocalStream();
     await create_peer_conn();
