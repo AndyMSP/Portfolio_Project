@@ -1,0 +1,14 @@
+# place at /etc/systemd/system/api.service
+
+[Unit]
+Description=Gunicorn instance to serve api
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/Portfolio_Project
+ExecStart=/usr/local/bin/gunicorn --workers 1 --bind 0.0.0.0:5001 api.v1.app:app
+
+[Install]
+WantedBy=multi-user.target

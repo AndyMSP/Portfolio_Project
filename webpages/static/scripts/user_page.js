@@ -116,8 +116,8 @@ async function create_peer_conn() {
     async function shutdown() {
         localAudio.stop()
         localVideo.stop()
-        await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/status_update/free`)
-        await fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/end_call`)
+        await fetch(`https://everybodysweb.com/api/v1/users/${id}/status_update/free`)
+        await fetch(`https://everybodysweb.com/api/v1/users/${id}/end_call`)
     }
 
 
@@ -208,7 +208,7 @@ async function create_peer_conn() {
 
     // function calls
     async function run() {
-        fetch(`https://web-01.tacobell.tech/api/v1/users/${id}/status_update/busy`)
+        fetch(`https://everybodysweb.com/api/v1/users/${id}/status_update/busy`)
         await agora_init();
         await getLocalStream();
         await create_peer_conn();

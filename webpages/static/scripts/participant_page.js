@@ -97,12 +97,12 @@ async function create_peer_conn() {
 async function call() {
     call_button.disabled = true;
     end_call_button.disabled = false;
-    url = `https://web-01.tacobell.tech/api/v1/users/${id}/status`;
+    url = `https://everybodysweb.com/api/v1/users/${id}/status`;
     const resp = await fetch(url);
     const data = await resp.json();
     if (data.status == 'free') {
         console.log(`status = ${data.status}`);
-        url = `https://web-01.tacobell.tech/api/v1/users/${id}/call`;
+        url = `https://everybodysweb.com/api/v1/users/${id}/call`;
         await fetch(url)
         agora_contact();
     } else {

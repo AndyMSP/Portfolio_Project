@@ -18,10 +18,10 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate new instance"""
-        MYSQL_USER = 'IGN_dev'
-        MYSQL_PWD = 'IGN_dev_pwd'
+        MYSQL_USER = 'EBW_dev'
+        MYSQL_PWD = 'EBW_dev_pwd'
         MYSQL_HOST = 'localhost'
-        MYSQL_DB = 'IGN_db'
+        MYSQL_DB = 'EBW_db'
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
         format(
             MYSQL_USER,
